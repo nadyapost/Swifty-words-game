@@ -11,8 +11,8 @@
 		13E2A566226442530039E532 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E2A565226442530039E532 /* ViewController.swift */; };
 		13E2A569226442530039E532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13E2A567226442530039E532 /* Main.storyboard */; };
 		13E2A56B226442540039E532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13E2A56A226442540039E532 /* Assets.xcassets */; };
-		13E2A56E226442540039E532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13E2A56C226442540039E532 /* LaunchScreen.storyboard */; };
-		13E2A579226442540039E532 /* Project_8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E2A578226442540039E532 /* Project_8Tests.swift */; };
+		13E2A58E2265F3870039E532 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13E2A5892265F3540039E532 /* level1.txt */; };
+		13E2A58F2265F3870039E532 /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13E2A58A2265F3540039E532 /* level2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +34,8 @@
 		13E2A56D226442540039E532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13E2A56F226442540039E532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13E2A574226442540039E532 /* Project 8Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Project 8Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13E2A578226442540039E532 /* Project_8Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_8Tests.swift; sourceTree = "<group>"; };
-		13E2A57A226442540039E532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13E2A5892265F3540039E532 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
+		13E2A58A2265F3540039E532 /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				13E2A562226442530039E532 /* Project 8 */,
-				13E2A577226442540039E532 /* Project 8Tests */,
 				13E2A561226442530039E532 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,17 +82,10 @@
 				13E2A56A226442540039E532 /* Assets.xcassets */,
 				13E2A56C226442540039E532 /* LaunchScreen.storyboard */,
 				13E2A56F226442540039E532 /* Info.plist */,
+				13E2A5892265F3540039E532 /* level1.txt */,
+				13E2A58A2265F3540039E532 /* level2.txt */,
 			);
 			path = "Project 8";
-			sourceTree = "<group>";
-		};
-		13E2A577226442540039E532 /* Project 8Tests */ = {
-			isa = PBXGroup;
-			children = (
-				13E2A578226442540039E532 /* Project_8Tests.swift */,
-				13E2A57A226442540039E532 /* Info.plist */,
-			);
-			path = "Project 8Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,7 +169,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E2A56E226442540039E532 /* LaunchScreen.storyboard in Resources */,
+				13E2A58E2265F3870039E532 /* level1.txt in Resources */,
+				13E2A58F2265F3870039E532 /* level2.txt in Resources */,
 				13E2A56B226442540039E532 /* Assets.xcassets in Resources */,
 				13E2A569226442530039E532 /* Main.storyboard in Resources */,
 			);
@@ -206,7 +199,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E2A579226442540039E532 /* Project_8Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
