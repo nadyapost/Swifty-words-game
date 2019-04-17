@@ -18,8 +18,14 @@ class ViewController: UIViewController {
   var activatedButtons = [UIButton]()
   var solutions = [String]()
   
-  var score = 0
+  var score = 0 {
+    didSet {
+      scoreLabel.text = "Score \(score)"
+    }
+  }
+    
   var level = 1
+  var correctAnswers = [String]()
   
   override func loadView() {
     view = UIView()
@@ -58,12 +64,19 @@ class ViewController: UIViewController {
     view.addSubview(currentAnswer)
     
     let submit = UIButton(type: .system)
+
+    submit.layer.borderWidth = 0.5
+    submit.layer.cornerRadius = 10
+    submit.layer.borderColor = UIColor.lightGray.cgColor
     submit.translatesAutoresizingMaskIntoConstraints = false
     submit.setTitle("SUBMIT", for: .normal)
     submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
     view.addSubview(submit)
     
     let clear = UIButton(type: .system)
+    clear.layer.borderWidth = 0.5
+    clear.layer.cornerRadius = 10
+    clear.layer.borderColor = UIColor.lightGray.cgColor
     clear.translatesAutoresizingMaskIntoConstraints = false
     clear.setTitle("CLEAR", for: .normal)
     clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
@@ -108,6 +121,9 @@ class ViewController: UIViewController {
       for coloumn in 0..<5 {
         // create a new button and give it a big font size
         let letterButton = UIButton(type: .system)
+        letterButton.layer.borderWidth = 0.5
+        letterButton.layer.cornerRadius = 15
+        letterButton.layer.borderColor = UIColor.lightGray.cgColor
         letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
         // give the button some temporary text so we can see it on-screen
         letterButton.setTitle("WWW", for: .normal)
@@ -150,20 +166,27 @@ class ViewController: UIViewController {
       currentAnswer.text = ""
       score += 1
       
-      if score % 7 == 0 {
+      correctAnswers.append(answerLabel.text!)
+      if correctAnswers.count == solutions.count {
         let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
         present(ac, animated: true)
       }
+    } else {
+      let ac = UIAlertController(title: "Wrong answer.", message: "Please try one more time.", preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] action in
+        self?.score += -1
+        self?.clearTapped(sender)
+      }))
+      present(ac, animated: true)
     }
-    
-    
-  }
+      }
   
   func levelUp(action: UIAlertAction) {
     level += 1
     
     solutions.removeAll(keepingCapacity: true)
+    score = 0
     loadLevel()
     
     for button in letterButtons {
