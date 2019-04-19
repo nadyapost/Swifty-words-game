@@ -141,7 +141,9 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
  
-    loadLevel()
+    DispatchQueue.global(qos: .background).async { [weak self] in
+      self?.loadLevel()
+    }
   }
   
   @objc func letterTapped(_ sender: UIButton) {
@@ -156,7 +158,16 @@ class ViewController: UIViewController {
   @objc func submitTapped(_ sender: UIButton) {
     guard let answerText = currentAnswer.text else { return }
     
-    if let solutionPosition = solutions.firstIndex(of: answerText) {
+    guard let solutionPosition = solutions.firstIndex(of: answerText) else {
+      let ac = UIAlertController(title: "Wrong answer.", message: "Please try one more time.", preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] action in
+        self?.score += -1
+        self?.clearTapped(sender)
+      }))
+      present(ac, animated: true)
+      return
+    }
+      
       activatedButtons.removeAll()
       
       var splitAnswers = answerLabel.text?.components(separatedBy: "\n")
@@ -168,19 +179,12 @@ class ViewController: UIViewController {
       
       correctAnswers.append(answerLabel.text!)
       if correctAnswers.count == solutions.count {
-        let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
-        present(ac, animated: true)
+          let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: self.levelUp))
+         present(ac, animated: true)
+        
       }
-    } else {
-      let ac = UIAlertController(title: "Wrong answer.", message: "Please try one more time.", preferredStyle: .alert)
-      ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { [weak self] action in
-        self?.score += -1
-        self?.clearTapped(sender)
-      }))
-      present(ac, animated: true)
     }
-      }
   
   func levelUp(action: UIAlertAction) {
     level += 1
@@ -205,7 +209,7 @@ class ViewController: UIViewController {
     
   }
   
-  func loadLevel() {
+  @objc func loadLevel() {
     var clueString = ""
     var solutionString = ""
     var letterBits = [String]()
@@ -229,16 +233,19 @@ class ViewController: UIViewController {
           let bits = answer.components(separatedBy: "|")
           letterBits += bits
         }
+        letterBits.shuffle()
       }
     }
-    cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
-    answerLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
-    
-    letterBits.shuffle()
-    
-    if letterBits.count == letterButtons.count {
-      for i in 0 ..< letterButtons.count {
-        letterButtons[i].setTitle(letterBits[i], for: .normal)
+    DispatchQueue.main.async {
+      [weak self] in
+      guard let strongSelf = self else { return }
+      strongSelf.cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+      strongSelf.answerLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+      
+      if letterBits.count == self?.letterButtons.count {
+        for i in 0 ..< strongSelf.letterButtons.count {
+          strongSelf.letterButtons[i].setTitle(letterBits[i], for: .normal)
+        }
       }
     }
   }
